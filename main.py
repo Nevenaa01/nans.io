@@ -3,6 +3,8 @@ import numpy as np
 import pygame
 import random
 import methods.eulerN
+import botCell
+import virus
  
 pygame.init()   #starts pygame and all subparts of pygame
 
@@ -31,7 +33,7 @@ BLACK = (0, 0, 0)
 GREEN = (50,205,50)
 GREEN_VIRUS = (0, 255, 0)
 PURPLE = (138, 43, 226)
-BOJA_BOTA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
 
 #borders of the map
 mapBorders = pygame.Surface((WIDTH_MAP, HEIGHT_MAP))
@@ -57,69 +59,6 @@ def drawPlayerCell():
     #playerCell
     #pygame.display.update()
 
-
-
-def drawBotCell():
-    x = random.randint(SIZE, WIDTH_MAP - 5*SIZE)
-    y = random.randint(SIZE, HEIGHT_MAP - 5*SIZE)
-
-    #giving player enough distance at start
-    while True:
-        if x + SIZE <= X_PLAYER_CELL and y + SIZE > Y_PLAYER_CELL:
-            x = random.randint(SIZE, WIDTH_MAP - SIZE)
-        elif x + SIZE > X_PLAYER_CELL and y + SIZE <= Y_PLAYER_CELL:
-            y = random.randint(SIZE, HEIGHT_MAP - SIZE)
-        elif x + SIZE <= X_PLAYER_CELL and y + SIZE <= Y_PLAYER_CELL:
-            x = random.randint(SIZE, WIDTH_MAP - SIZE)
-            y = random.randint(SIZE, HEIGHT_MAP - SIZE)
-        else:
-            break
-
-    global x_bot_cell 
-    x_bot_cell= x
-
-    global y_bot_cell
-    y_bot_cell = y
-
-    botCell = pygame.draw.circle(mapBorders, BOJA_BOTA, (x_bot_cell, y_bot_cell), SIZE)
-
-def botCellMovement():
-    F = 10      #force that keeps the cell moving
-    m = 1
-
-    dP = lambda t: F/m
-
-    global x_bot_cell
-    global y_bot_cell
-
-    p = [x_bot_cell, y_bot_cell]
-
-    ta = 0
-    tb = 10
-    h = (ta - tb)/1000
-
-    t = np.arange(ta, tb + h, h)
-
-    pNew, _ = methods.eulerN.eulerN(ta, tb, h, p, dP, 0.0)
-
-    x_bot_cell, y_bot_cell = pNew
-
-    botCell = pygame.draw.circle(mapBorders, BOJA_BOTA, (x_bot_cell, y_bot_cell), SIZE)
-
-
-def drawViruses():
-    for i in range(7):
-
-        firstWidth = random.randint(LEFTBORDER, RIGHTBORDER)
-        firstHeight = random.randint(BOTTOMBORDER, UPPERBORDER)
-
-        #if firstWidth > WIDTH_MAP and firstHeight > HEIGHT_MAP:
-        pygame.draw.polygon(mapBorders, GREEN_VIRUS, ((firstWidth, firstHeight), 
-        (firstWidth + 50, firstHeight + 50), (firstWidth + 100, firstHeight)))
-
-        #else:
-           #i -= 1  #if its too close to the border get another set of coordinates
-
 def drawFoodCells():
     global countFoodCellsOnScreen
     for i in range(40):
@@ -132,8 +71,11 @@ def drawFoodCells():
 def main():
     clock = pygame.time.Clock()
 
-    drawBotCell()
-    drawViruses()
+    global x_bot_cell, y_bot_cell
+
+    x_bot_cell, y_bot_cell = botCell.drawBotCell(SIZE, WIDTH_MAP, HEIGHT_MAP, X_PLAYER_CELL, Y_PLAYER_CELL, pygame, mapBorders)
+
+    virus.drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, GREEN_VIRUS, pygame)
     
     #game loop
     while True:
