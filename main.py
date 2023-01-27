@@ -75,7 +75,7 @@ def main():
 
     x_bot_cell, y_bot_cell = botCell.drawBotCell(SIZE, WIDTH_MAP, HEIGHT_MAP, X_PLAYER_CELL, Y_PLAYER_CELL, pygame, mapBorders)
 
-    virus.drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, GREEN_VIRUS, pygame)
+    virus.drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, GREEN_VIRUS, pygame, x_bot_cell, y_bot_cell, X_PLAYER_CELL, Y_PLAYER_CELL, WIDTH_MAP, HEIGHT_MAP)
     
     #game loop
     while True:
