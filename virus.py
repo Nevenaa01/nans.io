@@ -28,7 +28,8 @@ def drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, 
             continue
 
 
-        #listOfPositions.append(((firstWidth, firstHeight), (firstWidth + 50, firstHeight + 50), (firstWidth + 100, firstHeight)))
+        listOfPositions.append(((firstWidth, firstHeight), (firstWidth + 50, firstHeight + 50), (firstWidth + 100, firstHeight)))
+        
 
         pygame.draw.polygon(mapBorders, GREEN_VIRUS, (firstPoint, secondPoint, thirdPoint, fourthPoint))
 
@@ -39,3 +40,5 @@ def drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, 
         else:
             xOld = xIncrement
             xIncrement += WIDTH_MAP/3
+
+    return listOfPositions

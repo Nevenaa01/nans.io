@@ -29,9 +29,11 @@ x_bot_cell = 0
 y_bot_cell = 0
 SIZE = 15
 PLAYER_SIZE = 17
-
 #food
 foods = []
+
+#virus
+listOfPositions = []
 
 #colors
 WHITE = (255, 255, 255)
@@ -61,12 +63,13 @@ def main():
 
     x_bot_cell, y_bot_cell = botCell.drawBotCell(SIZE, WIDTH_MAP, HEIGHT_MAP, X_PLAYER_CELL, Y_PLAYER_CELL, pygame, mapBorders)
 
-    virus.drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, GREEN_VIRUS, pygame, x_bot_cell, y_bot_cell, X_PLAYER_CELL, Y_PLAYER_CELL, WIDTH_MAP, HEIGHT_MAP)
+    listOfPositions = virus.drawViruses(mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, GREEN_VIRUS, pygame, x_bot_cell, y_bot_cell, X_PLAYER_CELL, Y_PLAYER_CELL, WIDTH_MAP, HEIGHT_MAP)
 
     playerCell.drawPlayerCell(mapBorders, PURPLE, X_PLAYER_CELL, Y_PLAYER_CELL, pygame, PLAYER_SIZE)
 
-    foods = foodCell.drawFoodCells(pygame, mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, x_bot_cell, y_bot_cell, SIZE, X_PLAYER_CELL, Y_PLAYER_CELL, PLAYER_SIZE)
+    foods = foodCell.drawFoodCells(pygame, mapBorders, LEFTBORDER, RIGHTBORDER, BOTTOMBORDER, UPPERBORDER, x_bot_cell, y_bot_cell, SIZE, X_PLAYER_CELL, Y_PLAYER_CELL, PLAYER_SIZE, listOfPositions)
 
+    
     #game loop
     while True:
         clock.tick(FPS)     #controls the speed of loop
@@ -76,7 +79,7 @@ def main():
                 exit()
 
         #botCellMovement()
-        #playerCell.playerCellMoving(pygame, mapBorders, PURPLE, PLAYER_SIZE, X_PLAYER_CELL, Y_PLAYER_CELL)
+        #playerCell.playerCellMoving(pygame, mapBorders, PURPLE, PLAYER_SIZE)
         #u kretanju celije ce se proslediti foods mozda
 
         drawWindow()
