@@ -29,16 +29,4 @@ def botCellMovement():
     global x_bot_cell
     global y_bot_cell
 
-    p = [x_bot_cell, y_bot_cell]
-
-    ta = 0
-    tb = 10
-    h = (ta - tb)/1000
-
-    t = np.arange(ta, tb + h, h)
-
-    pNew, _ = methods.eulerN.eulerN(ta, tb, h, p, dP, 0.0)
-
-    x_bot_cell, y_bot_cell = pNew
-
     botCell = pygame.draw.circle(mapBorders, BOJA_BOTA, (x_bot_cell, y_bot_cell), SIZE)
